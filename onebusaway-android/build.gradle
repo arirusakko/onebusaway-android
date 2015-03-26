@@ -86,7 +86,10 @@ android {
         }
 
         /**
-         * Rebranded versions of OBA using brand build flavors are below
+         * Rebranded versions of OBA using brand build flavors are below.  To add a new brand:
+         *  1. Add a new brand build flavor variant below
+         *  2. Create a new folder src/{brandName}/res (or copy from one of the samples - src/agencyX or src/agencyY)
+         *  3. Edit resource files in src/{brandName}/res subfolders with the brand information
          */
 
         agencyX {

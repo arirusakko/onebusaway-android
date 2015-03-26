@@ -16,8 +16,8 @@
 <resources>
     <!-- DO NOT TRANSLATE ANY STRINGS IN THIS FILE. -->
 
-    <!-- Android Maps API v2
-    TODO - replace this with another non-OBA key -->
-    <string name="apiv2_key">AIzaSyBxVM57hZ2WLRgtixDs_G5BGbK90mM5S5U</string>
+    <!-- Android Maps API v2 key for Agency X -->
+    <string name="apiv2_key">AIzaSyBooMg0AliKO3WXfg8Z4s7ASS9pjSU9TJY</string>
 
+    <!-- See src/main/res/do_not_translate.xml for more strings you can override here -->
 </resources>

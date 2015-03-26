@@ -38,12 +38,6 @@ android {
     buildToolsVersion "21.1.2"
 
     defaultConfig {
-        /**
-         * To allow this app to be distributed via Google Play, the applicationId MUST remain the
-         * original package name of the app before it was re-branded to OneBusAway:
-         * com.joulespersecond.seattlebusbot
-         */
-        applicationId "com.joulespersecond.seattlebusbot"
         minSdkVersion 9
         targetSdkVersion 21
         versionCode 38
@@ -78,23 +72,58 @@ android {
         }
 
         oba {
-            // Original OneBusAway brand
+            /**
+             * Original OneBusAway brand
+             *
+             * To allow this app to be distributed via Google Play, the applicationId MUST remain the
+             * original package name of the app before it was re-branded to OneBusAway:
+             * com.joulespersecond.seattlebusbot
+             */
             flavorDimension "brand"
+            applicationId "com.joulespersecond.seattlebusbot"
+            manifestPlaceholders = [databaseAuthority: "com.joulespersecond.oba"]
+            // Overwrite default with original OBA authority
         }
 
+        /**
+         * Rebranded versions of OBA using brand build flavors are below
+         */
+
         agencyX {
-            // Sample agency "Agency X" rebranding OneBusAway as another app
+            // "Agency X" rebranding OneBusAway as another app - see src/agencyX/res for branded resources
             flavorDimension "brand"
+            applicationId "org.agencyx.android" // Unique listing of this brand on app store
+            manifestPlaceholders = [databaseAuthority: applicationId.toString() + '.provider']
+            // Set unique brand database authority in manifest
         }
 
         agencyY {
-            // Sample agency "Agency Y" rebranding OneBusAway as another app
+            // "Agency Y" rebranding OneBusAway as another app - see src/agencyY/res for branded resources
             flavorDimension "brand"
+            applicationId "org.agencyy.android" // Unique listing of this brand on app store
+            manifestPlaceholders = [databaseAuthority: applicationId.toString() + '.provider']
+            // Set unique brand database authority in manifest
         }
 
         /**
          * Add more rebranding flavors here...
          */
+    }
+
+    /**
+     * Set brand BuildConfig.DATABASE_AUTHORITY, used in org.onebusaway.android.provider.ObaContract
+     */
+    applicationVariants.all {
+        variant ->
+            def authority;
+            if (variant.productFlavors.get(0).name == "oba") {
+                authority = 'com.joulespersecond.oba' // Must keep the original OBA authority
+                variant.buildConfigField "String", "DATABASE_AUTHORITY", authority
+            } else {
+                // It's cleaner to just append ".provider" to the applicationId for brand flavors
+                authority = '"' + applicationId.toString() + '.provider' + '"'
+                variant.buildConfigField "String", "DATABASE_AUTHORITY", authority
+            }
     }
 
     // http://stackoverflow.com/questions/20673625/gradle-0-7-0-duplicate-files-during-packaging-of-apk
@@ -139,6 +168,8 @@ android {
         }
     }
 }
+
+
 
 task askForPasswords << {
     // Must create String because System.readPassword() returns char[]

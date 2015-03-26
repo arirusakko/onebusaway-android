@@ -15,6 +15,7 @@
  */
 package org.onebusaway.android.provider;
 
+import org.onebusaway.android.BuildConfig;
 import org.onebusaway.android.io.elements.ObaRegion;
 import org.onebusaway.android.io.elements.ObaRegionElement;
 
@@ -42,8 +43,8 @@ import java.util.ArrayList;
  */
 public final class ObaContract {
 
-    /** The authority portion of the URI for the Oba provider */
-    public static final String AUTHORITY = "com.joulespersecond.oba";
+    /** The authority portion of the URI - defined in build.gradle */
+    public static final String AUTHORITY = BuildConfig.DATABASE_AUTHORITY;
 
     /** The base URI for the Oba provider */
     public static final Uri AUTHORITY_URI = Uri.parse("content://" + AUTHORITY);

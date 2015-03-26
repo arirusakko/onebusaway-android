@@ -16,4 +16,6 @@
 -->
 <resources>
     <string name="app_name">Agency X</string>
+
+    <!-- See src/main/res/strings.xml for more strings you can override here -->
 </resources>

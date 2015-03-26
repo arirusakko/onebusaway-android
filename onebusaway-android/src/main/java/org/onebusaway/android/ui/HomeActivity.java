@@ -71,7 +71,6 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.security.MessageDigest;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -179,9 +178,9 @@ public class HomeActivity extends ActionBarActivity
      * @param lon     The longitude of the map center.
      */
     public static final void start(Context context,
-                                   String focusId,
-                                   double lat,
-                                   double lon) {
+            String focusId,
+            double lat,
+            double lon) {
         context.startActivity(makeIntent(context, focusId, lat, lon));
     }
 
@@ -206,9 +205,9 @@ public class HomeActivity extends ActionBarActivity
      * @param lon     The longitude of the map center.
      */
     public static final Intent makeIntent(Context context,
-                                          String focusId,
-                                          double lat,
-                                          double lon) {
+            String focusId,
+            double lat,
+            double lon) {
         Intent myIntent = new Intent(context, HomeActivity.class);
         myIntent.putExtra(MapParams.STOP_ID, focusId);
         myIntent.putExtra(MapParams.CENTER_LAT, lat);
@@ -267,13 +266,16 @@ public class HomeActivity extends ActionBarActivity
         }
         ObaAnalytics.reportActivityStart(this);
         if (Build.VERSION.SDK_INT >= 14) {
-            AccessibilityManager am = (AccessibilityManager) getSystemService(ACCESSIBILITY_SERVICE);
+            AccessibilityManager am = (AccessibilityManager) getSystemService(
+                    ACCESSIBILITY_SERVICE);
             Boolean isTalkBackEnabled = am.isTouchExplorationEnabled();
-            if (isTalkBackEnabled)
-                ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.ACCESSIBILITY.toString(),
+            if (isTalkBackEnabled) {
+                ObaAnalytics.reportEventWithCategory(
+                        ObaAnalytics.ObaEventCategory.ACCESSIBILITY.toString(),
                         getString(R.string.analytics_action_touch_exploration),
                         getString(R.string.analytics_label_talkback) + getClass().getSimpleName()
                                 + " using TalkBack");
+            }
         }
     }
 
@@ -316,7 +318,8 @@ public class HomeActivity extends ActionBarActivity
                 if (mCurrentNavDrawerPosition != NAVDRAWER_ITEM_STARRED_STOPS) {
                     showStarredStopsFragment();
                     mCurrentNavDrawerPosition = item;
-                    ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                    ObaAnalytics.reportEventWithCategory(
+                            ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
                             getString(R.string.analytics_action_button_press),
                             getString(R.string.analytics_label_button_press_star));
                 }
@@ -325,7 +328,8 @@ public class HomeActivity extends ActionBarActivity
                 if (mCurrentNavDrawerPosition != NAVDRAWER_ITEM_NEARBY) {
                     showMapFragment();
                     mCurrentNavDrawerPosition = item;
-                    ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                    ObaAnalytics.reportEventWithCategory(
+                            ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
                             getString(R.string.analytics_action_button_press),
                             getString(R.string.analytics_label_button_press_nearby));
                 }
@@ -334,7 +338,8 @@ public class HomeActivity extends ActionBarActivity
                 if (mCurrentNavDrawerPosition != NAVDRAWER_ITEM_MY_REMINDERS) {
                     showMyRemindersFragment();
                     mCurrentNavDrawerPosition = item;
-                    ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                    ObaAnalytics.reportEventWithCategory(
+                            ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
                             getString(R.string.analytics_action_button_press),
                             getString(R.string.analytics_label_button_press_reminders));
                 }
@@ -342,21 +347,24 @@ public class HomeActivity extends ActionBarActivity
             case NAVDRAWER_ITEM_SETTINGS:
                 Intent preferences = new Intent(HomeActivity.this, PreferencesActivity.class);
                 startActivity(preferences);
-                ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
-                        getString(R.string.analytics_action_button_press),
-                        getString(R.string.analytics_label_button_press_settings));
+                ObaAnalytics
+                        .reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                                getString(R.string.analytics_action_button_press),
+                                getString(R.string.analytics_label_button_press_settings));
                 break;
             case NAVDRAWER_ITEM_HELP:
                 showDialog(HELP_DIALOG);
-                ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
-                        getString(R.string.analytics_action_button_press),
-                        getString(R.string.analytics_label_button_press_help));
+                ObaAnalytics
+                        .reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                                getString(R.string.analytics_action_button_press),
+                                getString(R.string.analytics_label_button_press_help));
                 break;
             case NAVDRAWER_ITEM_SEND_FEEDBACK:
                 Log.d(TAG, "TODO - show send feedback fragment");
-                ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
-                        getString(R.string.analytics_action_button_press),
-                        getString(R.string.analytics_label_button_press_feedback));
+                ObaAnalytics
+                        .reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                                getString(R.string.analytics_action_button_press),
+                                getString(R.string.analytics_label_button_press_feedback));
                 break;
         }
     }
@@ -513,7 +521,8 @@ public class HomeActivity extends ActionBarActivity
                                             .getTwitterUrl();
                                 }
                                 UIHelp.goToUrl(HomeActivity.this, twitterUrl);
-                                ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                                ObaAnalytics.reportEventWithCategory(
+                                        ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
                                         getString(R.string.analytics_action_switch),
                                         getString(R.string.analytics_label_app_switch));
                                 break;
@@ -537,7 +546,7 @@ public class HomeActivity extends ActionBarActivity
     private Dialog createWhatsNewDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle(R.string.main_help_whatsnew_title);
-        builder.setIcon(R.drawable.ic_launcher);
+        builder.setIcon(R.mipmap.ic_launcher);
         builder.setMessage(mWhatsNewMessage);
         builder.setNeutralButton(R.string.main_help_close,
                 new DialogInterface.OnClickListener() {
@@ -674,7 +683,7 @@ public class HomeActivity extends ActionBarActivity
     }
 
     private void updateArrivalListFragment(String stopId, ObaStop stop,
-                                           HashMap<String, ObaRoute> routes) {
+            HashMap<String, ObaRoute> routes) {
         FragmentManager fm = getSupportFragmentManager();
         Intent intent;
 
@@ -799,7 +808,8 @@ public class HomeActivity extends ActionBarActivity
             public void onClick(View arg0) {
                 if (mMapFragment != null) {
                     mMapFragment.setMyLocation(true, true);
-                    ObaAnalytics.reportEventWithCategory(ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
+                    ObaAnalytics.reportEventWithCategory(
+                            ObaAnalytics.ObaEventCategory.UI_ACTION.toString(),
                             getString(R.string.analytics_action_button_press),
                             getString(R.string.analytics_label_button_press_location));
                 }

@@ -90,6 +90,8 @@ android {
          *  1. Add a new brand build flavor variant below
          *  2. Create a new folder src/{brandName}/res (or copy from one of the samples - src/agencyX or src/agencyY)
          *  3. Edit resource files in src/{brandName}/res subfolders with the brand information
+         *
+         *  For generating icons for the res/mipmap-* folders, see http://romannurik.github.io/AndroidAssetStudio/icons-launcher.html
          */
 
         agencyX {
